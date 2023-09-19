@@ -12,30 +12,30 @@ const register = controllerWrapper(async (req, res) => {
   const user = await User.findOne({ email });
 
   if (user) {
-    throw HttpError(409, "Email in use");
+    throw new HttpError(409, "Email in use");
   }
 
-  const hashPassword = bcrypt.hash(password, 10);
+  const hashPassword = await bcrypt.hash(password, 10);
 
-  const newUser = { ...req.body, password: hashPassword };
+  const newUser = await User.create({ ...req.body, password: hashPassword });
 
   res.status(201).json({
     email: newUser.email,
-    name: newUser.name,
+    subscription: newUser.subscription,
   });
 });
 
 const login = controllerWrapper(async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, subscription } = req.body;
   const user = await User.findOne({ email });
 
   if (!user) {
-    throw HttpError(401, "Email or password is wrong");
+    throw new HttpError(401, "Email or password is wrong");
   }
 
   const passwordCompare = await bcrypt.compare(password, user.password);
   if (!passwordCompare) {
-    throw HttpError(401, "Email or password is wrong");
+    throw new HttpError(401, "Email or password is wrong");
   }
 
   const payload = {
@@ -45,7 +45,7 @@ const login = controllerWrapper(async (req, res) => {
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "1h" });
   await User.findByIdAndUpdate(user._id, { token });
 
-  res.json({ token, user: { email } });
+  res.json({ token, user: { email, subscription } });
 });
 
 const logout = controllerWrapper(async (req, res) => {
@@ -56,9 +56,9 @@ const logout = controllerWrapper(async (req, res) => {
 });
 
 const getCurrent = controllerWrapper(async (req, res) => {
-  const { email } = req.user;
+  const { email, subscription } = req.user;
 
-  res.json({ email });
+  res.json({ email, subscription });
 });
 
 module.exports = { register, login, logout, getCurrent };
