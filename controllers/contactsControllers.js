@@ -3,13 +3,17 @@ const { HttpError, controllerWrapper } = require("../helpers");
 
 const getAll = controllerWrapper(async (req, res, next) => {
   const { _id: owner } = req.user;
-  const { page = 1, limit = 20 } = req.query;
+  const { page = 1, limit = 20, favorite } = req.query;
   const skip = (page - 1) * limit;
 
-  const allContacts = await Contact.find({ owner }, "-createdAt -updatedAt", {
-    skip,
-    limit,
-  }).populate("owner");
+  const allContacts = await Contact.find(
+    favorite ? { owner, favorite } : { owner },
+    "-createdAt -updatedAt",
+    {
+      skip,
+      limit,
+    }
+  ).populate("owner");
   res.json(allContacts);
 });
 
