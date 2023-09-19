@@ -10,4 +10,8 @@ const loginSchema = Joi.object({
   password: Joi.string().required(),
 });
 
-module.exports = { registerSchema, loginSchema };
+const updateSubscriptionSchema = Joi.object({
+  subscription: Joi.any().valid("starter", "pro", "business"),
+});
+
+module.exports = { registerSchema, loginSchema, updateSubscriptionSchema };
