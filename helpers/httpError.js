@@ -1,3 +1,6 @@
+/**
+ * Custom HTTP error class that extends the JavaScript Error class.
+ */
 class HttpError extends Error {
   constructor(status, message) {
     super(message);

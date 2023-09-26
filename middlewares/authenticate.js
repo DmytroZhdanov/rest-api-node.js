@@ -3,6 +3,14 @@ const User = require("../models/schemas/users");
 const { HttpError } = require("../helpers");
 const { SECRET_KEY } = process.env;
 
+/**
+ * Middleware function to authenticate user requests using JWT token
+ *
+ * @param {Object} req Express request object
+ * @param {Object} res Express response object
+ * @param {Function} next Function to pass control to the next middleware
+ * @throws {HttpError} Throw error with status 401 if authentication failed
+ */
 const authenticate = async (req, res, next) => {
   const { authorization = "" } = req.headers;
   const [bearer, token] = authorization.split(" ");

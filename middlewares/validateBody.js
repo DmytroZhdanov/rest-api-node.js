@@ -1,5 +1,11 @@
 const { HttpError } = require("../helpers");
 
+/**
+ * Middleware function to validate the request body using a schema
+ * 
+ * @param {Joi.schema} schema Joi schema for request body validation
+ * @returns Middleware function to validate the request body
+ */
 const validateBody = schema => {
   return (req, res, next) => {
     const { error } = schema.validate(req.body);

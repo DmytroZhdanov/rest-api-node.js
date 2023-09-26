@@ -1,3 +1,4 @@
+// Joi schemas to validate request body related to contact's operations
 const Joi = require("joi");
 
 const addContactValidationSchema = Joi.object({

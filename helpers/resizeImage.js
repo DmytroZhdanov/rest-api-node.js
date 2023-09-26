@@ -1,5 +1,10 @@
 const Jimp = require("jimp");
 
+/**
+ * Function to crop, resize and center uploaded image
+ * 
+ * @param {String} tempUpload 
+ */
 const resizeImage = async tempUpload => {
   const image = await Jimp.read(tempUpload);
   await image

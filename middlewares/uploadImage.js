@@ -1,3 +1,4 @@
+// Multer middleware configuration for uploading images
 const multer = require("multer");
 const path = require("path");
 
@@ -7,8 +8,8 @@ const multerConfig = multer.diskStorage({
   destination: tempDir,
 });
 
-const upload = multer({
+const uploadImage = multer({
   storage: multerConfig,
 });
 
-module.exports = upload;
+module.exports = uploadImage;

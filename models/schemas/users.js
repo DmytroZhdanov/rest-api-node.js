@@ -2,6 +2,7 @@ const { Schema, model } = require("mongoose");
 
 const { handleMongooseError } = require("../../helpers");
 
+// Schema for User model
 const user = new Schema(
   {
     password: {
@@ -27,8 +28,10 @@ const user = new Schema(
   { versionKey: false, timestamps: true }
 );
 
+// Handle Mongoose save errors using a post middleware
 user.post("save", handleMongooseError);
 
+// Creating Mongoose model for the 'user' collection using the userSchema
 const User = model("user", user);
 
 module.exports = User;

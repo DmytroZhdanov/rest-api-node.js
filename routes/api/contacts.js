@@ -1,9 +1,11 @@
 const express = require("express");
-const router = express.Router();
 const controllers = require("../../controllers/contactsControllers");
 const { validateBody, isValidId, authenticate } = require("../../middlewares");
 const schemas = require("../../utils/validation/contactValidationSchemas");
 
+const router = express.Router();
+
+// Routes for handling various contacts-related requests
 router.get("/", authenticate, controllers.getAll);
 router.get("/:contactId", authenticate, isValidId, controllers.getById);
 router.post(

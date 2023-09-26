@@ -1,3 +1,4 @@
+// Joi schemas to validate request body related to authorization operations
 const Joi = require("joi");
 
 const registerValidationSchema = Joi.object({

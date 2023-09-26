@@ -8,12 +8,13 @@ const contactsRouter = require("./routes/api/contacts");
 
 const app = express();
 
+// Determine the logging format based on the environment
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
-app.use(logger(formatsLogger));
-app.use(cors());
-app.use(express.json());
-app.use(express.static("public"));
+app.use(logger(formatsLogger)); // Middleware for request logging
+app.use(cors()); // Middleware for enabling CORS
+app.use(express.json()); // Middleware for parsing JSON request bodies
+app.use(express.static("public")); // Sets up the Express application to serve static files from the "public" directory
 
 app.use("/api/users", authRouter);
 app.use("/api/contacts", contactsRouter);
