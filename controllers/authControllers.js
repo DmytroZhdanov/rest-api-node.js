@@ -47,7 +47,7 @@ const register = controllerWrapper(async (req, res) => {
  * @returns {Object} JSON response containing authentication token and user's email and subscription
  */
 const login = controllerWrapper(async (req, res) => {
-  const { email, password, subscription } = req.body;
+  const { email, password } = req.body;
   const user = await User.findOne({ email });
 
   if (!user) {
@@ -66,7 +66,7 @@ const login = controllerWrapper(async (req, res) => {
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "1h" });
   await User.findByIdAndUpdate(user._id, { token });
 
-  res.json({ token, user: { email, subscription } });
+  res.json({ token, user: { email, subscription: user.subscription } });
 });
 
 /**
