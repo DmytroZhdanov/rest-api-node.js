@@ -7,6 +7,8 @@ const router = express.Router();
 
 // Routes for handling various user-related requests
 router.post("/register", validateBody(schemas.registerValidationSchema), controllers.register);
+router.get("/users/verify/:verificationToken", controllers.verificationRequest);
+router.post("users/verify", validateBody(schemas.verifyValidationSchema), controllers.verify);
 router.post("/login", validateBody(schemas.loginValidationSchema), controllers.login);
 router.post("/logout", authenticate, controllers.logout);
 router.get("/current", authenticate, controllers.getCurrent);

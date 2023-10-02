@@ -6,6 +6,10 @@ const registerValidationSchema = Joi.object({
   password: Joi.string().required(),
 });
 
+const verifyValidationSchema = Joi.object({
+  email: Joi.string().required(),
+});
+
 const loginValidationSchema = Joi.object({
   email: Joi.string().required(),
   password: Joi.string().required(),
@@ -17,6 +21,7 @@ const updateSubscriptionValidationSchema = Joi.object({
 
 module.exports = {
   registerValidationSchema,
+  verifyValidationSchema,
   loginValidationSchema,
   updateSubscriptionValidationSchema,
 };
