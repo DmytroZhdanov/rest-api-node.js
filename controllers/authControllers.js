@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const gravatar = require("gravatar");
 const path = require("path");
 const fs = require("fs/promises");
-const nanoid = require("nanoid");
+const {nanoid} = require("nanoid");
 
 const User = require("../models/schemas/users");
 const { HttpError, controllerWrapper, resizeImage } = require("../helpers");
@@ -81,6 +81,7 @@ const verificationRequest = controllerWrapper(async (req, res) => {
  */
 const verify = controllerWrapper(async (req, res) => {
   const { email } = req.body;
+
   const user = await User.findOne({ email });
 
   if (!user) {
@@ -90,7 +91,6 @@ const verify = controllerWrapper(async (req, res) => {
   if (user.verify) {
     throw new HttpError(400, "Verification has already been passed");
   }
-
   await sendEmail(createVerificationEmail(email, user.verificationToken));
 
   res.status(200).json({ message: "Verification email sent" });
