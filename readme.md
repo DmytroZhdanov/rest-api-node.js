@@ -1,5 +1,6 @@
 # Phonebook REST API
 
+An Express.js-based phonebook API with user authentication, CRUD operations for contacts, utilizing Jest for unit testing, and supporting avatar updates via multipart form-data.
 
 ## Structure:
 - **/controllers** - Handles requests, interacts with models, and sends responses.
