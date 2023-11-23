@@ -1,31 +1,117 @@
-## GoIT Node.js Course Template Homework
+# Phonebook REST API
 
-Виконайте форк цього репозиторію для виконання домашніх завдань (2-6)
-Форк створить репозиторій на вашому http://github.com
 
-Додайте ментора до колаборації
+## Structure:
+- **/controllers** - Handles requests, interacts with models, and sends responses.
+- **/helpers** - Contains utility/helper functions used across different parts of the application, aiding in various functionalities.
+- **/middlewares** - Contains middleware functions (e.g., authentication middleware).
+- **/models** - Defines database schemas and interacts with the database.
+- **/public** - Serves as a temporary storage directory for user avatars before they're uploaded to the database. It temporarily holds user avatar images during the upload process.
+- **/routes** - Defines API endpoints and routes.
+- **/tmp** - Another temporary storage directory used by the application for file uploads or other transient data. It may also be utilized for handling temporary data or file manipulation before final processing or storage.
+- **/utils** - Contains various utility functions or modules that provide generic functionalities throughout the application.
+- **Dockerfile** - Configuration file containing instructions for building a Docker image for the application.
+- **app.js** - Entry point of the application, sets up server and middleware.
+- **env.example** - Example file showing the structure and keys of environment variables required by the application.
+- **nodemon.json** - Configuration file for Nodemon, a utility that monitors changes in the application and automatically restarts the server during development.
+- **package.json** - Contains project metadata and dependencies.
+- **README.md** - Provides instructions for setting up and running the application.
+- **server.js** - Server setup file, handling server configurations or starting the application.
 
-Для кожної домашньої роботи створюйте свою гілку.
+## Functionality:
 
-- hw02
-- hw03
-- hw04
-- hw05
-- hw06
+### Authentication:
+- User registration, login, and logout endpoints.
+- Middleware for authentication and authorization.
 
-Кожна нова гілка для др повинна робитися з master
+### Contacts Management:
+- API endpoints for CRUD operations on contacts.
+- Endpoints to retrieve, add, update, and delete contacts.
+- Database models to manage contacts.
 
-Після того, як ви закінчили виконувати домашнє завдання у своїй гілці, необхідно зробити пулл-реквест (PR). Потім додати ментора для рев'ю коду. Тільки після того, як ментор заапрувить PR, ви можете виконати мердж гілки з домашнім завданням у майстер.
+## Technologies Used:
+- Node.js and Express for the backend.
+- Database MongoDB for storing contact information.
+- Authentication using JSON Web Tokens (JWT).
+- Jest for unit testing of login controller.
 
-Уважно читайте коментарі ментора. Виправте зауваження та зробіть коміт у гілці з домашнім завданням. Зміни підтягнуться у PR автоматично після того, як ви відправите коміт з виправленнями на github
-Після виправлення знову додайте ментора на рев'ю коду.
 
-- При здачі домашньої роботи є посилання на PR
-- JS-код чистий та зрозумілий, для форматування використовується Prettier
+## Development Workflow:
 
-### Команди:
+### Setup:
+Clone the repository.  
+Install dependencies using `npm install`.
 
-- `npm start` &mdash; старт сервера в режимі production
-- `npm run start:dev` &mdash; старт сервера в режимі розробки (development)
-- `npm run lint` &mdash; запустити виконання перевірки коду з eslint, необхідно виконувати перед кожним PR та виправляти всі помилки лінтера
-- `npm lint:fix` &mdash; та ж перевірка лінтера, але з автоматичними виправленнями простих помилок
+### Run Application:
+Use `npm start` to start the server.  
+Or use `npm run start:dev` to start the server in development mode.
+
+### Testing:
+Run tests using `npm run test`.
+
+## Usage:
+
+### API Endpoints:
+- Register a new user: **POST** `/api/users/register`
+  ```bash
+  {
+    "email": "email@example.com",
+    "password": "PasswordExample"
+  }
+  ```
+- Verify email address: **GET** `/api/users/verify/:verificationToken`
+- Request email address verification: **POST** `/api/users/verify`
+  ```bash
+  {
+    "email": "email@example.com"
+  }
+  ```
+- Log in a user: **POST** `/api/users/login`
+  ```bash
+  {
+    "email": "email@example.com",
+    "password": "PasswordExample"
+  }
+  ```
+- Log out a user: **POST** `/api/users/logout` 🔓*
+- Get current user: **GET** `/api/users/current` 🔓*
+- Update subscription status: **PATCH** `/api/users` 🔓*
+  ```bash
+  {
+    "subscription": "business",
+  }
+  ```
+- Update user's avatar: **PATCH** `/api/users/avatars` 🔓*
+  ```bash
+  "Content-Type": "multipart/form-data",
+  "body": {
+    "avatar": {binary string},
+  }
+  ```
+- Get all contacts: **GET** `/api/contacts` 🔓*
+- Get contact by ID: **GET** `/api/contacts/:contactId` 🔓*
+- Add a contact: **POST** `/api/contacts` 🔓*
+  ```bash
+  {
+    "name": "Name Example",
+    "email": "email@example.com",
+    "phone": "123-456-7890"
+  }
+  ```
+- Delete a contact: **DELETE** `/api/contacts/:contactId` 🔓*
+- Update a contact: **PUT** `/api/contacts/:contactId` 🔓*
+  ```bash
+  {
+    "name": "Name Example",
+    "email": "email@example.com",
+    "phone": "123-456-7890"
+  }
+  ```
+- Update 'Favorite' status to contact: **PATCH** `/api/contacts/:contactId/favorite` 🔓*
+  ```bash
+  {
+    "favorite": true
+  }
+  ```
+
+🔓* - Private route. `"authorization": "Bearer {token}"` required.
